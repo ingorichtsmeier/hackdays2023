@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="5c6a2f2" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.3.0" camunda:diagramRelationId="4572df40-b3e6-436e-a91c-2ce62b12ba54">
+  <bpmn:collaboration id="Collaboration_1pvo4pw">
+    <bpmn:participant id="Participant_1x978sy" name="Diagram Formal Check" processRef="DiagramFormalCheckProcess" />
+  </bpmn:collaboration>
+  <bpmn:process id="DiagramFormalCheckProcess" name="Diagram Formal Check" isExecutable="true">
+    <bpmn:endEvent id="Event_0g8hmoq" name="Check completed">
+      <bpmn:incoming>Flow_1jjb38a</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:startEvent id="Event_1ugrky6" name="Check required">
+      <bpmn:extensionElements>
+        <zeebe:properties>
+          <zeebe:property name="camundaModeler:exampleOutputJson" value="{&#34;fileId&#34;: &#34;bd505fca-65f2-4826-adc4-c9238c522553&#34;}" />
+        </zeebe:properties>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_18eypjo</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="Activity_0f3k0ux" name="Check file">
+      <bpmn:documentation>1. curl:
+https://modeler.cloud.camunda.io/api/beta/files/{fileId}
+
+2. linter
+bpmnlint {fileName}</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="check-file" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_18eypjo</bpmn:incoming>
+      <bpmn:outgoing>Flow_1899z1a</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_02w2an3" name="Modify file">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="modify-file" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1899z1a</bpmn:incoming>
+      <bpmn:outgoing>Flow_1jjb38a</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1jjb38a" sourceRef="Activity_02w2an3" targetRef="Event_0g8hmoq" />
+    <bpmn:sequenceFlow id="Flow_18eypjo" sourceRef="Event_1ugrky6" targetRef="Activity_0f3k0ux" />
+    <bpmn:sequenceFlow id="Flow_1899z1a" sourceRef="Activity_0f3k0ux" targetRef="Activity_02w2an3" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1pvo4pw">
+      <bpmndi:BPMNShape id="Participant_1x978sy_di" bpmnElement="Participant_1x978sy" isHorizontal="true">
+        <dc:Bounds x="160" y="80" width="570" height="170" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0g8hmoq_di" bpmnElement="Event_0g8hmoq">
+        <dc:Bounds x="642" y="142" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="618" y="185" width="85" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1ugrky6_di" bpmnElement="Event_1ugrky6">
+        <dc:Bounds x="222" y="142" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="203" y="185" width="75" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1pkt0td_di" bpmnElement="Activity_0f3k0ux">
+        <dc:Bounds x="320" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0o9tyoc_di" bpmnElement="Activity_02w2an3">
+        <dc:Bounds x="480" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1jjb38a_di" bpmnElement="Flow_1jjb38a">
+        <di:waypoint x="580" y="160" />
+        <di:waypoint x="642" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18eypjo_di" bpmnElement="Flow_18eypjo">
+        <di:waypoint x="258" y="160" />
+        <di:waypoint x="320" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1899z1a_di" bpmnElement="Flow_1899z1a">
+        <di:waypoint x="420" y="160" />
+        <di:waypoint x="480" y="160" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
