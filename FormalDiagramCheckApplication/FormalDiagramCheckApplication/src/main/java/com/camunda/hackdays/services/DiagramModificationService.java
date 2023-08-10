@@ -100,7 +100,7 @@ public class DiagramModificationService {
     Iterator<BpmnShape> iterator = model.getModelElementsByType(BpmnShape.class).iterator();
     while(iterator.hasNext()){
       BpmnShape elementShape = iterator.next();
-      LOGGER.info("ElementShape: {}", elementShape.getBpmnElement().getId());
+      LOGGER.debug("ElementShape: {}", elementShape.getBpmnElement().getId());
       if(elementShape.getBpmnElement().getId().equals(elementId)){
         wp2.setX(elementShape.getBounds().getX() + 0.5 * elementShape.getBounds().getWidth());
         wp2.setY(elementShape.getBounds().getY());
