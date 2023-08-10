@@ -39,10 +39,24 @@ public class DiagramModificationService {
             }
         }
 
+        String elementID;
+        String warning;
         for(int i = 1; i < linesToParse.size() -1; i++){
             LOGGER.info("{} Line to parse {}", i, linesToParse.get(i));
+            String[] splittedLine = linesToParse.get(i).split(" ");
+            LOGGER.info("{} Splitted lines {}", i, splittedLine);
+            elementID = splittedLine[0];
+            warning = "";
+            for(int j = 2; j < splittedLine.length - 1; j++){
+                warning += splittedLine[j] + " ";
+            }
+            if(linterResultMap.containsKey(elementID)){
+                linterResultMap.put(elementID, linterResultMap.get(elementID) + "; " + warning.trim());
+            }else{
+                linterResultMap.put(elementID, warning.trim());
+            }
         }
-
+        LOGGER.info("Splitted lines {}", linterResultMap);
         return linterResultMap;
     }
 }
