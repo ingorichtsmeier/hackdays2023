@@ -14,49 +14,49 @@ import java.util.Map;
 
 @Component
 public class DiagramModificationService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DiagramModificationService.class);
-    public BpmnModelInstance modifyDiagram(BpmnModelInstance diagram, String linterResults){
-        Map<String, String> linterResultMap = parseLinterResults(linterResults);
+  private static final Logger LOGGER = LoggerFactory.getLogger(DiagramModificationService.class);
+
+  public BpmnModelInstance modifyDiagram(BpmnModelInstance diagram, String linterResults) {
+    Map<String, String> linterResultMap = parseLinterResults(linterResults);
 
 
 
-        return diagram;
+    return diagram;
+  }
+
+  public Map<String, String> parseLinterResults(String linterResults) {
+    // elementId, Comment
+    Map<String, String> linterResultMap = new HashMap<>();
+
+    String[] resultLines = linterResults.split(";");
+
+    List<String> linesToParse = new ArrayList<>();
+
+    for (String line : resultLines) {
+      line = line.trim();
+      if (line.length() != 0) {
+        linesToParse.add(line);
+      }
     }
 
-    public Map<String,String> parseLinterResults(String linterResults) {
-        // elementId, Comment
-        Map<String, String> linterResultMap = new HashMap<>();
-
-        String[] resultLines = linterResults.split(";");
-
-        List<String> linesToParse = new ArrayList<>();
-
-        for (String line:
-             resultLines) {
-            line = line.trim();
-            if(line.length() != 0){
-                linesToParse.add(line);
-            }
-        }
-
-        String elementID;
-        String warning;
-        for(int i = 1; i < linesToParse.size() -1; i++){
-            LOGGER.info("{} Line to parse {}", i, linesToParse.get(i));
-            String[] splittedLine = linesToParse.get(i).split(" ");
-            LOGGER.info("{} Splitted lines {}", i, splittedLine);
-            elementID = splittedLine[0];
-            warning = "";
-            for(int j = 2; j < splittedLine.length - 1; j++){
-                warning += splittedLine[j] + " ";
-            }
-            if(linterResultMap.containsKey(elementID)){
-                linterResultMap.put(elementID, linterResultMap.get(elementID) + "; " + warning.trim());
-            }else{
-                linterResultMap.put(elementID, warning.trim());
-            }
-        }
-        LOGGER.info("Splitted lines {}", linterResultMap);
-        return linterResultMap;
+    String elementID;
+    String warning;
+    for (int i = 1; i < linesToParse.size() - 1; i++) {
+      LOGGER.info("{} Line to parse {}", i, linesToParse.get(i));
+      String[] splittedLine = linesToParse.get(i).split(" ");
+      LOGGER.info("{} Splitted lines {}", i, splittedLine);
+      elementID = splittedLine[0];
+      warning = "";
+      for (int j = 2; j < splittedLine.length - 1; j++) {
+        warning += splittedLine[j] + " ";
+      }
+      if (linterResultMap.containsKey(elementID)) {
+        linterResultMap.put(elementID, linterResultMap.get(elementID) + "; " + warning.trim());
+      } else {
+        linterResultMap.put(elementID, warning.trim());
+      }
     }
+    LOGGER.info("Splitted lines {}", linterResultMap);
+    return linterResultMap;
+  }
 }
