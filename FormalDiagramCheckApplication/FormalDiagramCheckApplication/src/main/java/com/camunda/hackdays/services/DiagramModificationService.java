@@ -1,8 +1,10 @@
 package com.camunda.hackdays.services;
 
-import com.camunda.hackdays.worker.DiagramModificationWorker;
-import io.camunda.zeebe.model.bpmn.Bpmn;
 import io.camunda.zeebe.model.bpmn.BpmnModelInstance;
+import io.camunda.zeebe.model.bpmn.instance.BpmnModelElementInstance;
+import io.camunda.zeebe.model.bpmn.instance.Process;
+import io.camunda.zeebe.model.bpmn.instance.Text;
+import io.camunda.zeebe.model.bpmn.instance.TextAnnotation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -42,9 +44,9 @@ public class DiagramModificationService {
     String elementID;
     String warning;
     for (int i = 1; i < linesToParse.size() - 1; i++) {
-      LOGGER.info("{} Line to parse {}", i, linesToParse.get(i));
+      LOGGER.debug("{} Line to parse {}", i, linesToParse.get(i));
       String[] splittedLine = linesToParse.get(i).split(" ");
-      LOGGER.info("{} Splitted lines {}", i, splittedLine);
+      LOGGER.debug("{} Splitted lines {}", i, splittedLine);
       elementID = splittedLine[0];
       warning = "";
       for (int j = 2; j < splittedLine.length - 1; j++) {
@@ -59,4 +61,24 @@ public class DiagramModificationService {
     LOGGER.info("Splitted lines {}", linterResultMap);
     return linterResultMap;
   }
+  
+  public BpmnModelInstance addComment(String comment, String elementId, BpmnModelInstance model) {
+    
+    Process process = model.getModelElementsByType(Process.class).iterator().next();
+    
+    TextAnnotation textAnnotation = createElement(process, "textannotation_" + elementId, TextAnnotation.class);
+    Text text = createElement(textAnnotation, null, Text.class);
+    text.setTextContent(comment);
+    
+    return model;
+  }
+
+  protected <T extends BpmnModelElementInstance> T createElement(BpmnModelElementInstance parentElement, String id, Class<T> elementClass) {
+    T element = parentElement.getModelInstance().newInstance(elementClass);
+    element.setAttributeValue("id", id, true);
+    parentElement.addChildElement(element);
+    return element;
+  }
+
+  
 }
