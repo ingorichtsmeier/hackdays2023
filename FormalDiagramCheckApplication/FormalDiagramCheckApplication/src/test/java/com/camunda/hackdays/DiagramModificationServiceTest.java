@@ -6,6 +6,11 @@ import io.camunda.zeebe.model.bpmn.BpmnModelInstance;
 import io.camunda.zeebe.model.bpmn.instance.TextAnnotation;
 import org.junit.jupiter.api.Test;
 
+import java.awt.geom.Path2D;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,14 +33,40 @@ public class DiagramModificationServiceTest {
   }
 
   @Test
-  void testAddcomment() {
+  void testAddComment() throws IOException {
     BpmnModelInstance changedModel =
         new DiagramModificationService().addComment("hallo test comment", "Activity_1dzoh12",
-            Bpmn.readModelFromStream(this.getClass().getResourceAsStream("/ugly-diagram.bpmn")));
+            Bpmn.readModelFromStream(this.getClass().getResourceAsStream("/ugly-diagram.bpmn")),0);
 
     assertThat(changedModel).isNotNull();
     assertThat(changedModel.getModelElementsByType(TextAnnotation.class)).hasSize(1);
     assertThat(changedModel.getModelElementsByType(TextAnnotation.class).iterator().next().getText()
         .getTextContent()).isEqualTo("hallo test comment");
+
+     //System.out.println(newModelFile.createNewFile());
+    //Files.createFile(Paths.get("/User/jana/Documents/Coding/Hackdays/firstTextAnnotation.bpmn"));
+    File newModelFile = new File("/Users/jana/Documents/Coding/Hackdays/firstTextAnnotation.bpmn");
+    newModelFile.createNewFile();
+    Bpmn.writeModelToFile(newModelFile, changedModel);
+  }
+
+  @Test
+  void testAddComments() throws IOException {
+    DiagramModificationService diagramModificationService = new DiagramModificationService();
+    BpmnModelInstance changedModel =
+           diagramModificationService.addComment("hallo test comment", "Activity_1dzoh12",
+                    Bpmn.readModelFromStream(this.getClass().getResourceAsStream("/ugly-diagram.bpmn")),0);
+    changedModel =
+            diagramModificationService.addComment("hallo test comment 2", "StartEvent_1", changedModel,1);
+    assertThat(changedModel).isNotNull();
+    assertThat(changedModel.getModelElementsByType(TextAnnotation.class)).hasSize(2);
+    assertThat(changedModel.getModelElementsByType(TextAnnotation.class).iterator().next().getText()
+            .getTextContent()).isEqualTo("hallo test comment");
+
+    //System.out.println(newModelFile.createNewFile());
+    //Files.createFile(Paths.get("/User/jana/Documents/Coding/Hackdays/firstTextAnnotation.bpmn"));
+    File newModelFile = new File("/Users/jana/Documents/Coding/Hackdays/firstTextAnnotation.bpmn");
+    newModelFile.createNewFile();
+    Bpmn.writeModelToFile(newModelFile, changedModel);
   }
 }
