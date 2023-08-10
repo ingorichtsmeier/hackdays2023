@@ -6,11 +6,8 @@ import io.camunda.zeebe.model.bpmn.BpmnModelInstance;
 import io.camunda.zeebe.model.bpmn.instance.TextAnnotation;
 import org.junit.jupiter.api.Test;
 
-import java.awt.geom.Path2D;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -43,9 +40,7 @@ public class DiagramModificationServiceTest {
     assertThat(changedModel.getModelElementsByType(TextAnnotation.class).iterator().next().getText()
         .getTextContent()).isEqualTo("hallo test comment");
 
-     //System.out.println(newModelFile.createNewFile());
-    //Files.createFile(Paths.get("/User/jana/Documents/Coding/Hackdays/firstTextAnnotation.bpmn"));
-    File newModelFile = new File("/Users/jana/Documents/Coding/Hackdays/firstTextAnnotation.bpmn");
+    File newModelFile = new File("target/firstTextAnnotation.bpmn");
     newModelFile.createNewFile();
     Bpmn.writeModelToFile(newModelFile, changedModel);
   }
@@ -63,9 +58,7 @@ public class DiagramModificationServiceTest {
     assertThat(changedModel.getModelElementsByType(TextAnnotation.class).iterator().next().getText()
             .getTextContent()).isEqualTo("hallo test comment");
 
-    //System.out.println(newModelFile.createNewFile());
-    //Files.createFile(Paths.get("/User/jana/Documents/Coding/Hackdays/firstTextAnnotation.bpmn"));
-    File newModelFile = new File("/Users/jana/Documents/Coding/Hackdays/firstTextAnnotation.bpmn");
+    File newModelFile = new File("target/secondTextAnnotation.bpmn");
     newModelFile.createNewFile();
     Bpmn.writeModelToFile(newModelFile, changedModel);
   }

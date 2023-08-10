@@ -1,12 +1,13 @@
 package com.camunda.hackdays.worker;
 
 import com.camunda.hackdays.services.DiagramModificationService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.camunda.zeebe.client.api.response.ActivatedJob;
 import io.camunda.zeebe.client.api.worker.JobClient;
 import io.camunda.zeebe.client.api.worker.JobHandler;
 import io.camunda.zeebe.model.bpmn.Bpmn;
 import io.camunda.zeebe.model.bpmn.BpmnModelInstance;
-import io.camunda.zeebe.model.bpmn.instance.bpmndi.BpmnDiagram;
 import io.camunda.zeebe.spring.client.annotation.JobWorker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,13 +15,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.json.JacksonJsonParser;
 import org.springframework.http.*;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
+import java.util.Map;
 
 @Component
 public class DiagramModificationWorker implements JobHandler {
@@ -60,8 +62,16 @@ public class DiagramModificationWorker implements JobHandler {
 
         //LOGGER.info("Response: {}", responseEntity.getBody());
 
-        String fileContent = (String) new JacksonJsonParser().parseMap(responseEntity.getBody()).get("content");
+        Map<String, Object> responseMap = new JacksonJsonParser().parseMap(responseEntity.getBody());
+        String fileContent = (String) responseMap.get("content");
+        Map<?, ?> metadata = (Map<?, ?>) responseMap.get("metadata");
+        String folderId = (String) metadata.get("folderId");
+        String projectId = (String) metadata.get("projectId");
+        String parentId = (String) metadata.get("folderId");
+        int revision = (int) metadata.get("revision");
+        String filename = (String) metadata.get("name");
         LOGGER.info("BPMN File: {}", fileContent);
+        LOGGER.info("FolderId: {}, ProjectId: {}, ParentId: {}, next revision: {}, name: {}", folderId, projectId, parentId, revision, filename);
 
         // convert to BPMN diagram
         InputStream targetStream = new ByteArrayInputStream(fileContent.getBytes());
@@ -73,12 +83,25 @@ public class DiagramModificationWorker implements JobHandler {
         BpmnModelInstance modifiedModel =  diagramModificationService.modifyDiagram(modelInstance, lintingResult);
         //LOGGER.info("BPMN File: {}", Bpmn.convertToString(modifiedModel));
 
-        File newModelFile = new File("/Users/jana/Documents/Coding/Hackdays/processModifiedByWorker.bpmn");
+        File newModelFile = new File("target/processModifiedByWorker.bpmn");
         newModelFile.createNewFile();
         Bpmn.writeModelToFile(newModelFile, modifiedModel);
-        // TODO upload modified diagram
-
-
+        
+        // upload modified diagram
+        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+        restTemplate.setRequestFactory(requestFactory);
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode objectNode = objectMapper.createObjectNode()
+            .put("name", filename)
+            .put("content", Bpmn.convertToString(modifiedModel))
+            .put("revision", revision)
+            .put("projectId", projectId)
+            .put("parentId", parentId);
+        String request = objectMapper.writer().writeValueAsString(objectNode);
+        LOGGER.debug("PATCH request: {}", request);
+        HttpEntity<String> entityRequest = new HttpEntity<String>(request, header);
+        Object patchResponse = restTemplate.exchange(url, HttpMethod.PATCH, entityRequest, Void.class);
+        LOGGER.debug("Resosnse from patch: {}", patchResponse);
 
     }
 }
