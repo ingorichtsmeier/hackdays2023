@@ -73,7 +73,9 @@ public class DiagramModificationWorker implements JobHandler {
         BpmnModelInstance modifiedModel =  diagramModificationService.modifyDiagram(modelInstance, lintingResult);
         //LOGGER.info("BPMN File: {}", Bpmn.convertToString(modifiedModel));
 
-
+        File newModelFile = new File("/Users/jana/Documents/Coding/Hackdays/processModifiedByWorker.bpmn");
+        newModelFile.createNewFile();
+        Bpmn.writeModelToFile(newModelFile, modifiedModel);
         // TODO upload modified diagram
 
 

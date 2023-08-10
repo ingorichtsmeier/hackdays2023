@@ -24,8 +24,12 @@ public class DiagramModificationService {
   public BpmnModelInstance modifyDiagram(BpmnModelInstance diagram, String linterResults) {
     Map<String, String> linterResultMap = parseLinterResults(linterResults);
 
-
-
+    int i = 0;
+    for (String linterResultKey:linterResultMap.keySet()
+         ) {
+      addComment(linterResultMap.get(linterResultKey), linterResultKey, diagram, i);
+      i++;
+    }
     return diagram;
   }
 
