@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="bf0082d" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.3.0" camunda:diagramRelationId="55f28616-3b9a-42ce-ac53-32deea410db0">
+  <bpmn:collaboration id="Collaboration_1wh3si1">
+    <bpmn:extensionElements>
+      <zeebe:properties />
+    </bpmn:extensionElements>
+    <bpmn:participant id="Participant_0qa9w8x" name="Check Diagram - Trainer" processRef="CheckBpmnDiagramProcess">
+      <bpmn:extensionElements>
+        <zeebe:properties />
+      </bpmn:extensionElements>
+    </bpmn:participant>
+  </bpmn:collaboration>
+  <bpmn:process id="CheckBpmnDiagramProcess" name="Check BPMN Diagram" isExecutable="true">
+    <bpmn:extensionElements>
+      <zeebe:userTaskForm id="userTaskForm_1kt1u5i">{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.2.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "bf0082d"
+  },
+  "schemaVersion": 10,
+  "components": [
+    {
+      "text": "### Check for completed quizzes",
+      "label": "Text view",
+      "type": "text",
+      "layout": {
+        "row": "Row_1hgxui8",
+        "columns": null
+      },
+      "id": "Field_1m1ktrf"
+    },
+    {
+      "label": "New completed quizzes found?",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_1pij3ts",
+        "columns": null
+      },
+      "id": "Field_1ng66yx",
+      "key": "completedQuizzes"
+    }
+  ],
+  "type": "default",
+  "id": "check-for-completed-quizzes-0cxe7as"
+}</zeebe:userTaskForm>
+      <zeebe:userTaskForm id="userTaskForm_1470mds">{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.2.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "bf0082d"
+  },
+  "schemaVersion": 10,
+  "components": [
+    {
+      "text": "### Copy new quiz results to web modeler",
+      "label": "Text view",
+      "type": "text",
+      "layout": {
+        "row": "Row_18b1d9g",
+        "columns": null
+      },
+      "id": "Field_1p7d0ar"
+    },
+    {
+      "label": "New quizzes found?",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_1lmy19k",
+        "columns": null
+      },
+      "id": "Field_0qt35kv",
+      "key": "completedQuizzes"
+    },
+    {
+      "label": "Folder ID",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1nl0sus",
+        "columns": null
+      },
+      "id": "Field_12fz60j",
+      "key": "folderId",
+      "description": "Take the value (e.g. '0cb53277-b65d-4754-bb95-da5b516019b2') from the URL of the folder"
+    }
+  ],
+  "type": "default",
+  "id": "copy-quiz-results-to-web-modeler-1dre5ry"
+}</zeebe:userTaskForm>
+      <zeebe:userTaskForm id="userTaskForm_3ievmef">{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.2.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "bf0082d"
+  },
+  "schemaVersion": 10,
+  "components": [
+    {
+      "text": "### Check the diagram for further improvements",
+      "label": "Text view",
+      "type": "text",
+      "layout": {
+        "row": "Row_18o1zi5",
+        "columns": null
+      },
+      "id": "Field_1pem2j6"
+    },
+    {
+      "text": "[Link to the diagram](https://modeler.cloud.camunda.io/diagrams/{{fileId}})",
+      "label": "Text view",
+      "type": "text",
+      "layout": {
+        "row": "Row_0xqdwob",
+        "columns": null
+      },
+      "id": "Field_07fpong"
+    },
+    {
+      "label": "Share link",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1jcmd0v",
+        "columns": null
+      },
+      "id": "Field_1atp610",
+      "key": "shareLink",
+      "description": "Create a share link from the reviewed diagram",
+      "validate": {
+        "required": true
+      }
+    }
+  ],
+  "type": "default",
+  "id": "check-for-further-improvements-0l2roke"
+}</zeebe:userTaskForm>
+      <zeebe:userTaskForm id="userTaskForm_07te8n3">{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.2.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "bf0082d"
+  },
+  "schemaVersion": 10,
+  "components": [
+    {
+      "text": "### Skilljar Maintenance",
+      "label": "Text view",
+      "type": "text",
+      "layout": {
+        "row": "Row_0x2sf6u",
+        "columns": null
+      },
+      "id": "Field_18rmvqv"
+    },
+    {
+      "text": "Update the quiz result in [Skilljar](https://dashboard.skilljar.com/tasks/grade-quiz/{{quizId}})",
+      "label": "Text view",
+      "type": "text",
+      "layout": {
+        "row": "Row_05d30am",
+        "columns": null
+      },
+      "id": "Field_0hkn306"
+    },
+    {
+      "label": "Share Link",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1h5md1x",
+        "columns": null
+      },
+      "id": "Field_1qo4v37",
+      "key": "shareLink",
+      "disabled": true
+    },
+    {
+      "label": "Skilljar Updated",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_0s7xxnx",
+        "columns": null
+      },
+      "id": "Field_03deli7",
+      "key": "field_12r0cr0",
+      "validate": {
+        "required": true
+      }
+    }
+  ],
+  "type": "default",
+  "id": "complete-quiz-in-skilljar-0sdl5ff"
+}</zeebe:userTaskForm>
+    </bpmn:extensionElements>
+    <bpmn:exclusiveGateway id="Gateway_1ny9kxz" name="new completed quizzes found?">
+      <bpmn:incoming>Flow_1j100or</bpmn:incoming>
+      <bpmn:outgoing>Flow_0pzj4om</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0i75lza</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0kpu5pw" sourceRef="Event_10eekw7" targetRef="Activity_0kignlw" />
+    <bpmn:sequenceFlow id="Flow_0pzj4om" name="no" sourceRef="Gateway_1ny9kxz" targetRef="Event_0jyjbpp">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=completedQuizzes = false</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0i75lza" name="yes" sourceRef="Gateway_1ny9kxz" targetRef="Activity_1qihokh">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=completedQuizzes = true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1sn75re" sourceRef="Activity_1mdnioj" targetRef="Event_0q7gz8d" />
+    <bpmn:sequenceFlow id="Flow_138c7a8" sourceRef="Activity_1qihokh" targetRef="Activity_1mdnioj" />
+    <bpmn:userTask id="Activity_0kignlw" name="Copy quiz results to Web Modeler">
+      <bpmn:extensionElements>
+        <zeebe:formDefinition formKey="camunda-forms:bpmn:userTaskForm_1470mds" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0kpu5pw</bpmn:incoming>
+      <bpmn:outgoing>Flow_1j100or</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1j100or" sourceRef="Activity_0kignlw" targetRef="Gateway_1ny9kxz" />
+    <bpmn:startEvent id="Event_10eekw7" name="every day">
+      <bpmn:extensionElements>
+        <zeebe:properties />
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_0kpu5pw</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="Activity_1qihokh" name="get File IDs from Web Modeler">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="get-files" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0i75lza</bpmn:incoming>
+      <bpmn:outgoing>Flow_138c7a8</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:subProcess id="Activity_1mdnioj" name="Single diagram check">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:input source="=file.id" target="fileId" />
+          <zeebe:input source="=file.quizId" target="quizId" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_138c7a8</bpmn:incoming>
+      <bpmn:outgoing>Flow_1sn75re</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics>
+        <bpmn:extensionElements>
+          <zeebe:loopCharacteristics inputCollection="=files" inputElement="file" />
+        </bpmn:extensionElements>
+      </bpmn:multiInstanceLoopCharacteristics>
+      <bpmn:startEvent id="Event_1twpaqs">
+        <bpmn:outgoing>Flow_1nsm08i</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:callActivity id="Activity_0klfxcf" name="formal diagram check">
+        <bpmn:extensionElements>
+          <zeebe:calledElement processId="DiagramFormalCheckProcess" propagateAllChildVariables="false" />
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_1nsm08i</bpmn:incoming>
+        <bpmn:outgoing>Flow_03f1jed</bpmn:outgoing>
+      </bpmn:callActivity>
+      <bpmn:sequenceFlow id="Flow_03f1jed" sourceRef="Activity_0klfxcf" targetRef="Activity_15879x8" />
+      <bpmn:sequenceFlow id="Flow_0mzq3za" sourceRef="Activity_15879x8" targetRef="Activity_14b5y4z" />
+      <bpmn:endEvent id="Event_0iomng4">
+        <bpmn:incoming>Flow_0eaed7g</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_1nsm08i" sourceRef="Event_1twpaqs" targetRef="Activity_0klfxcf" />
+      <bpmn:userTask id="Activity_15879x8" name="Check for further improvements">
+        <bpmn:extensionElements>
+          <zeebe:formDefinition formKey="camunda-forms:bpmn:userTaskForm_3ievmef" />
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_03f1jed</bpmn:incoming>
+        <bpmn:outgoing>Flow_0mzq3za</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:sequenceFlow id="Flow_0qeii9a" sourceRef="Activity_14b5y4z" targetRef="Activity_14z808w" />
+      <bpmn:sequenceFlow id="Flow_0eaed7g" sourceRef="Activity_14z808w" targetRef="Event_0iomng4" />
+      <bpmn:task id="Activity_14b5y4z" name="collect feedback result">
+        <bpmn:incoming>Flow_0mzq3za</bpmn:incoming>
+        <bpmn:outgoing>Flow_0qeii9a</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:userTask id="Activity_14z808w" name="complete quiz in skilljar">
+        <bpmn:extensionElements>
+          <zeebe:formDefinition formKey="camunda-forms:bpmn:userTaskForm_07te8n3" />
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0qeii9a</bpmn:incoming>
+        <bpmn:outgoing>Flow_0eaed7g</bpmn:outgoing>
+      </bpmn:userTask>
+    </bpmn:subProcess>
+    <bpmn:endEvent id="Event_0jyjbpp" name="no quizzes found">
+      <bpmn:incoming>Flow_0pzj4om</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="Event_0q7gz8d" name="diagrams checked">
+      <bpmn:incoming>Flow_1sn75re</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:textAnnotation id="TextAnnotation_00ae2g4">
+      <bpmn:text>automate using API or bot</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_1knda12" sourceRef="Activity_0kignlw" targetRef="TextAnnotation_00ae2g4" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1wh3si1">
+      <bpmndi:BPMNShape id="Participant_0a8616l_di" bpmnElement="Participant_0qa9w8x" isHorizontal="true">
+        <dc:Bounds x="170" y="80" width="1410" height="350" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1ny9kxz_di" bpmnElement="Gateway_1ny9kxz" isMarkerVisible="true">
+        <dc:Bounds x="465" y="245" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="453" y="305" width="74" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0upmxht" bpmnElement="Activity_0kignlw" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
+        <dc:Bounds x="310" y="230" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1hfrsiv_di" bpmnElement="Event_10eekw7">
+        <dc:Bounds x="222" y="252" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="215" y="295" width="50" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0apdvbm" bpmnElement="Activity_1qihokh">
+        <dc:Bounds x="570" y="230" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1mdnioj_di" bpmnElement="Activity_1mdnioj" isExpanded="true">
+        <dc:Bounds x="710" y="170" width="750" height="190" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1twpaqs_di" bpmnElement="Event_1twpaqs">
+        <dc:Bounds x="732" y="252" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0g3uwug" bpmnElement="Activity_0klfxcf">
+        <dc:Bounds x="810" y="230" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0iomng4_di" bpmnElement="Event_0iomng4">
+        <dc:Bounds x="1402" y="252" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0g3c70m_di" bpmnElement="Activity_15879x8">
+        <dc:Bounds x="950" y="230" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0cdtvbm_di" bpmnElement="Activity_14b5y4z" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="1100" y="230" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0svwgfi_di" bpmnElement="Activity_14z808w" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
+        <dc:Bounds x="1240" y="230" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_17o64ap" bpmnElement="Flow_03f1jed">
+        <di:waypoint x="910" y="270" />
+        <di:waypoint x="950" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_0iw02xf" bpmnElement="Flow_0mzq3za">
+        <di:waypoint x="1050" y="270" />
+        <di:waypoint x="1100" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1nsm08i_di" bpmnElement="Flow_1nsm08i">
+        <di:waypoint x="768" y="270" />
+        <di:waypoint x="810" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0qeii9a_di" bpmnElement="Flow_0qeii9a">
+        <di:waypoint x="1200" y="270" />
+        <di:waypoint x="1240" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0eaed7g_di" bpmnElement="Flow_0eaed7g">
+        <di:waypoint x="1340" y="270" />
+        <di:waypoint x="1402" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_0jyjbpp_di" bpmnElement="Event_0jyjbpp">
+        <dc:Bounds x="732" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="709" y="145" width="84" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0q7gz8d_di" bpmnElement="Event_0q7gz8d">
+        <dc:Bounds x="1492" y="252" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1466" y="295" width="90" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_00ae2g4_di" bpmnElement="TextAnnotation_00ae2g4">
+        <dc:Bounds x="350" y="120" width="100" height="41" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0kpu5pw_di" bpmnElement="Flow_0kpu5pw">
+        <di:waypoint x="258" y="270" />
+        <di:waypoint x="310" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0pzj4om_di" bpmnElement="Flow_0pzj4om">
+        <di:waypoint x="490" y="245" />
+        <di:waypoint x="490" y="120" />
+        <di:waypoint x="732" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="499" y="180" width="13" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0i75lza_di" bpmnElement="Flow_0i75lza">
+        <di:waypoint x="515" y="270" />
+        <di:waypoint x="570" y="270" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="533" y="252" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1sn75re_di" bpmnElement="Flow_1sn75re">
+        <di:waypoint x="1460" y="270" />
+        <di:waypoint x="1492" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_138c7a8_di" bpmnElement="Flow_138c7a8">
+        <di:waypoint x="670" y="270" />
+        <di:waypoint x="710" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1j100or_di" bpmnElement="Flow_1j100or">
+        <di:waypoint x="410" y="270" />
+        <di:waypoint x="465" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_1knda12_di" bpmnElement="Association_1knda12">
+        <di:waypoint x="372" y="230" />
+        <di:waypoint x="392" y="161" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

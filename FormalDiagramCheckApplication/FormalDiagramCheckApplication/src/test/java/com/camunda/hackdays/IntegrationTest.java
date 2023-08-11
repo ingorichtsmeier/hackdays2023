@@ -1,5 +1,8 @@
 package com.camunda.hackdays;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.camunda.zeebe.client.ZeebeClient;
 import io.camunda.zeebe.client.api.response.ActivateJobsResponse;
 import io.camunda.zeebe.client.api.response.ProcessInstanceEvent;
@@ -16,6 +19,7 @@ import java.util.concurrent.TimeoutException;
 
 import static io.camunda.zeebe.process.test.assertions.BpmnAssert.assertThat;
 import static io.camunda.zeebe.spring.test.ZeebeTestThreadSupport.waitForProcessInstanceCompleted;
+import static io.camunda.zeebe.spring.test.ZeebeTestThreadSupport.waitForProcessInstanceHasPassedElement;
 
 @SpringBootTest
 @ZeebeSpringTest
@@ -35,10 +39,13 @@ public class IntegrationTest {
 
     @BeforeEach
     public void depoy(){
-        zeebe.newDeployResourceCommand().addResourceFromClasspath("diagram-formal-check.bpmn").send().join();
+        zeebe.newDeployResourceCommand()
+                .addResourceFromClasspath("diagram-formal-check.bpmn")
+                .addResourceFromClasspath("check-bpmn-diagram.bpmn")
+                .send().join();
     }
     @Test
-    public void runSimpleProcess() throws InterruptedException, TimeoutException {
+    public void runFormalCheckProcess() throws InterruptedException, TimeoutException {
         ProcessInstanceEvent processInstance = zeebe.newCreateInstanceCommand()
                 .bpmnProcessId("DiagramFormalCheckProcess")
                 .latestVersion()
@@ -55,5 +62,19 @@ public class IntegrationTest {
         waitForProcessInstanceCompleted(processInstance);
 
         assertThat(processInstance).isCompleted();
+    }
+
+    @Test
+    public void testGetFiles(){
+        ProcessInstanceEvent processInstance = zeebe.newCreateInstanceCommand()
+                .bpmnProcessId("CheckBpmnDiagramProcess")
+                .latestVersion()
+                .variables(Map.of("folderId", "033e563a-29be-4386-b5cc-38ca316562b0"))
+                .startBeforeElement("Activity_1qihokh")
+                .send().join();
+
+        waitForProcessInstanceHasPassedElement(processInstance.getProcessInstanceKey(), "Activity_1qihokh");
+
+        assertThat(processInstance).hasVariable("files");
     }
 }
